@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo.png';
+const backend = import.meta.env.VITE_backend+'/api/v1/users/login';
+
+// const backend = process.env_VITE_backend; // Replace with your backend URL
 
 // Login Component
 const Login = ({ onSwitchToSignup }) => {
@@ -8,12 +11,23 @@ const Login = ({ onSwitchToSignup }) => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = () => {
-    console.log('Login:', { email, password });
-    alert('Login functionality - connect to your backend here!');
+    alert(`Logging in with Email: ${email} and Password: ${password} ${backend}`);
+    const response = fetch(backend, {
+      method: 'POST',
+      headers: {  
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+    response.then(res => res.json()).then(data => {
+      console.log('Login response data:', data);
+    }).catch(error => {
+      console.error('Login error:', error);
+    });
   };
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
+    <div className="relative flex min-h-[80vh] w-full flex-col items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
       <div className="w-full max-w-4xl rounded-xl bg-white dark:bg-gray-900 shadow-lg border border-gray-200 dark:border-gray-800 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         {/* Left Panel: Branding & Value Proposition */}
         <div className="hidden md:flex flex-col gap-8 p-10 bg-gray-50 dark:bg-gray-900/50">
