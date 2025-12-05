@@ -42,9 +42,6 @@ export default defineConfig(async () => {
     define: {
       'process.env_VITE_backend': JSON.stringify(process.env.VITE_backend),
       'process.env_VITE_frontend': JSON.stringify(process.env.VITE_frontend),
-    },
-    server: {
-    historyApiFallback: true
-  }
+    }
   };
 })
