@@ -40,28 +40,28 @@ const Hero = ({ onGetStarted }) => {
           </p>
         </div>
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-4 p-0 ">
-          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-primary dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#11244a] dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
             <span className="material-symbols-outlined text-primary text-3xl">auto_awesome</span>
             <div className="flex flex-col gap-1">
               <h3 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Instant Quiz Generation</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Our AI generates relevant questions and answers in seconds.</p>
             </div>
           </div>
-          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-primary dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#11244a] dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
             <span className="material-symbols-outlined text-primary text-3xl">edit_note</span>
             <div className="flex flex-col gap-1">
               <h3 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Customize Your Topics</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Input any subject or text to create a perfectly tailored quiz.</p>
             </div>
           </div>
-          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-primary dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#11244a] dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
             <span className="material-symbols-outlined text-primary text-3xl">tune</span>
             <div className="flex flex-col gap-1">
               <h3 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Adjustable Difficulty</h3>
               <p className="text-gray-500 dark:text-gray-400 text-sm font-normal leading-normal">Choose from easy, medium, or hard difficulty levels.</p>
             </div>
           </div>
-          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-primary dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
+          <div className="flex flex-col flex-1 gap-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-[#11244a] dark:bg-card-dark p-4 shadow-sm hover:shadow-md transition-shadow">
             <span className="material-symbols-outlined text-primary text-3xl">checklist</span>
             <div className="flex flex-col gap-1">
               <h3 className="text-gray-900 dark:text-white text-base font-bold leading-tight">Multiple Question Formats</h3>

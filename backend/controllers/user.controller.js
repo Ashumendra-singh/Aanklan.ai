@@ -1,5 +1,5 @@
 import User from "../models/user.model.js";
-import { createHash } from "crypto";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 
 import { generateLoginToken, generateAndSetJWT } from "../utils/tokens.util.js";
@@ -90,3 +90,46 @@ export const getCurrentUser = async (req, res) => {
         },
     });
 }
+
+export const forgotPassword = async (req, res) => {
+    const { email } = req.body;
+    const user = await User.findOne({ email });
+
+    if (!user) {
+        throw new AppError(404, "User with this email does not exist");
+    }
+    const resetToken = generateLoginToken();
+    user.resetToken = resetToken.hash;
+    user.tokenCreatedAt = Date.now();
+    await user.save();
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken.token}&id=${user._id}`;
+
+    await sendEmail(user.email, resetLink);
+    return res.status(200).json({
+        success: true,
+        message: "Password reset link has been sent to your email.",
+    });
+}
+export const resetPassword = async (req, res) => {
+    const { userId, token, newPassword } = req.body;
+    const user = await User.findById(userId);
+
+    if (!user) {
+        throw new AppError(404, "User not found");
+    }   
+    const { hash: tokenHash } = generateLoginToken(token);
+
+    if (user.resetToken !== tokenHash) {
+        throw new AppError(400, "Invalid or expired password reset token");
+    }
+    user.password = await bcrypt.hash(newPassword, 10);
+    user.resetToken = undefined;
+    user.tokenCreatedAt = undefined;
+    await user.save();
+
+    return res.status(200).json({
+        success: true,
+        message: "Password has been reset successfully.",
+    });
+}
+

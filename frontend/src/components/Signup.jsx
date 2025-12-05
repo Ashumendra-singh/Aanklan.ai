@@ -22,7 +22,7 @@ const Signup = ({ onSwitchToLogin }) => {
     <div className="relative flex min-h-screen w-full flex-col items-center justify-center bg-gray-100 dark:bg-gray-950 p-4">
       <div className="w-full max-w-4xl rounded-xl bg-white dark:bg-gray-900 shadow-lg border border-gray-200 dark:border-gray-800 grid grid-cols-1 md:grid-cols-2 overflow-hidden">
         {/* Left Panel: Branding & Value Proposition */}
-        <div className="hidden md:flex flex-col gap-8 p-10 bg-gray-50 dark:bg-gray-900/50">
+        <div className="hidden md:flex flex-col  gap-8 p-10 bg-gray-50 dark:bg-gray-900/50">
           <div className="flex items-center gap-3">
             <img src={logo} alt="logo" className='h-8'/>
             <p className="text-xl font-bold text-gray-900 dark:text-white">Aanklan.ai</p>
