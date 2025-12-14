@@ -2,7 +2,7 @@ import React from 'react'
 import logo from '../assets/logo.png'
 import { useLocation, useNavigate } from 'react-router-dom';
 
-function Navbar({ onLogoClick, onSignIn, onSignUp }) {
+function Navbar() {
   const location = useLocation();
   const currentPath = location.pathname;
 

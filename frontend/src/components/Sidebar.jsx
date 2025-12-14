@@ -25,7 +25,7 @@ const Sidebar = ({ activeNav, onNavClick }) => {
   ];
 
   return (
-    <aside className="flex w-64 flex-col border-r border-gray-200 dark:border-gray-800  dark:bg-background-dark p-4">
+    <aside className="flex h-[80vh] w-64 flex-col border-r border-gray-200 dark:border-gray-800  dark:bg-background-dark p-4">
       <div className="flex items-center gap-3 mb-8">
         <div 
           className="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" 

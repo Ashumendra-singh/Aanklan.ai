@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
 const backend = import.meta.env.VITE_backend+'/api/v1/users/login';
 
@@ -9,9 +10,17 @@ const Login = ({ onSwitchToSignup }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const navigate = useNavigate();
+
+  const handleSignUp = (val) => {
+      navigate('/signup');
+  };
+  
 
   const handleLogin = () => {
-    alert(`Logging in with Email: ${email} and Password: ${password} ${backend}`);
     const response = fetch(backend, {
       method: 'POST',
       headers: {  
@@ -20,7 +29,9 @@ const Login = ({ onSwitchToSignup }) => {
       body: JSON.stringify({ email, password }),
     });
     response.then(res => res.json()).then(data => {
-      console.log('Login response data:', data);
+      
+      if(data.success)
+      navigate('/quiz');
     }).catch(error => {
       console.error('Login error:', error);
     });
@@ -121,7 +132,7 @@ const Login = ({ onSwitchToSignup }) => {
                 <p className="text-center text-sm text-gray-600 dark:text-gray-400">
                   Don't have an account?{' '}
                   <button 
-                    onClick={onSwitchToSignup}
+                    onClick={handleSignUp}
                     className="font-semibold text-blue-600 hover:underline"
                   >
                     Sign Up

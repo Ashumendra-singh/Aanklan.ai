@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+const backend = import.meta.env.VITE_backend+'/api/v1/users/register';
 
 const Signup = ({ onSwitchToLogin }) => {
   const [fullName, setFullName] = useState('');
@@ -9,13 +11,36 @@ const Signup = ({ onSwitchToLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+
+  const navigate = useNavigate();
+
+  const handleSignIn = (val) => {
+      navigate('/signin');
+  };
+
+
   const handleSignup = () => {
     if (password !== confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
-    console.log('Signup:', { fullName, email, password });
-    alert('Signup successful! Connect to your backend here.');
+    const response = fetch(backend, {
+      method: 'POST',
+      headers: {  
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ fullName, email, password }),
+    });
+    response.then(res => res.json()).then(data => {
+      console.log('Login response data:', data);
+      if(data.success){
+        navigate('/quiz');
+      }
+    }).catch(error => {
+      console.error('Login error:', error);
+    });
   };
 
   return (
@@ -147,7 +172,7 @@ const Signup = ({ onSwitchToLogin }) => {
                 <p className="text-center text-sm text-gray-600 dark:text-gray-400">
                   Already have an account?{' '}
                   <button 
-                    onClick={onSwitchToLogin}
+                    onClick={handleSignIn}
                     className="font-semibold text-blue-600 hover:underline"
                   >
                     Log In

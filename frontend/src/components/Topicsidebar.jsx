@@ -5,7 +5,7 @@ const TopicsSidebar = ({activeNav, activeTopic, onTopicClick, quizTopics }) => {
   return (
     <>  
     {activeNav === 'history' ? ( 
-    <aside className="flex w-72 flex-col border-r border-gray-200 dark:border-gray-800 bg-background-light dark:bg-gray-900/40 p-4">
+    <aside className="flex h-[80vh] w-72 flex-col border-r border-gray-200 dark:border-gray-800 bg-background-light dark:bg-gray-900/40 p-4">
       <div className="mb-4">
         <h2 className="text-xl font-bold text-gray-900 dark:text-white px-2">Quiz Topics</h2>
         <p className="text-sm text-gray-500 dark:text-gray-400 px-2 mt-1">Select a topic to view quizzes.</p>
@@ -33,7 +33,7 @@ const TopicsSidebar = ({activeNav, activeTopic, onTopicClick, quizTopics }) => {
         ))}
       </nav>
     </aside>
-     ) : <div>{activeNav}</div>    }
+     ) : <div></div>    }
     </>
   );
 };

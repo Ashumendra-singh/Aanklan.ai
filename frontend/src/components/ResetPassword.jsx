@@ -7,7 +7,7 @@ const ResetPasswordScreen = ({ onPasswordReset }) => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState({});
-  const [isSuccess, setIsSuccess] = useState(true);
+  const [isSuccess, setIsSuccess] = useState(false);
 
   const validatePassword = () => {
     const newErrors = {};

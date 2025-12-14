@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import DifficultyBadge from './DificultyBadge.jsx';
 
+
 // Mock data
 const quizTopics = [
   { id: 'all', name: 'All Topics', icon: 'menu_book' },
@@ -16,16 +17,33 @@ const quizHistory = [
     { id: 2, topic: 'Introduction to Quantum Physics', difficulty: 'Medium', questions: 15, date: 'Oct 12, 2023', color: 'yellow' },
     { id: 3, topic: 'Introduction to Quantum Physics', difficulty: 'Easy', questions: 10, date: 'Sep 30, 2023', color: 'green' },
 ];
+const sampleQuizDetails = {
+  id: 1,
+  topic: 'Introduction to Quantum Physics',
+  difficulty: 'Hard',
+  questions: [
+    { id: 1, question: 'What is the principle of superposition in quantum mechanics?', options: ['A particle can exist in multiple states simultaneously', 'Particles have definite positions and velocities', 'Energy levels are continuous', 'None of the above'], answer: 'A particle can exist in multiple states simultaneously' },
+    { id: 2, question: 'Who is known as the father of quantum theory?', options: ['Albert Einstein', 'Niels Bohr', 'Max Planck', 'Erwin Schrödinger'], answer: 'Max Planck' },
+    // More questions...
+  ],
+};
 
 
 
-const MainContent = ({ activeTopic }) => {
+
+
+const MainContent = ({ activeTopic, activeNav }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const currentTopic = quizTopics.find(t => t.id === activeTopic) || quizTopics[2];
+  const [selectedQuizId, setSelectedQuizId] = useState(null);
+
+  const quizFetch = (quizId) => {
+    setSelectedQuizId(prev => (prev === quizId ? null : quizId));
+  };
 
   return (
-    <main className="flex-1 p-6 lg:p-10 overflow-auto">
-      <div className="mx-auto w-full max-w-7xl">
+    <main className="h-[80vh] flex-1 p-6 lg:p-10 overflow-auto">
+      <div className="mx-auto w-[full] max-w-7xl">
         {/* Header */}
         <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
           <div className="flex flex-col gap-1">
@@ -74,6 +92,7 @@ const MainContent = ({ activeTopic }) => {
 
         {/* Table */}
         <div className="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800 dark:bg-background-dark">
+
           <div className="overflow-x-auto">
             <table className="min-w-full">
               <thead>
@@ -87,37 +106,75 @@ const MainContent = ({ activeTopic }) => {
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Questions
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
-                    Date Created
-                  </th>
+                 
                   <th className="px-6 py-4 text-left text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider"></th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200 dark:divide-gray-800">
-                {quizHistory.map(quiz => (
-                  <tr key={quiz.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/20 transition-colors">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
-                      {quiz.topic}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <DifficultyBadge difficulty={quiz.difficulty} color={quiz.color} />
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {quiz.questions}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                      {quiz.date}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
-                      <button className="text-primary hover:text-primary/80 transition-colors font-semibold">
-                        View Details
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                {quizHistory.map(quiz => {
+                  const isExpanded = selectedQuizId === quiz.id;
+                  const details = isExpanded && sampleQuizDetails.id === quiz.id ? sampleQuizDetails : null;
+
+                  return (
+                    <React.Fragment key={quiz.id}>
+                      <tr className="hover:bg-gray-50transition-colors">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
+                          {quiz.topic}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <DifficultyBadge difficulty={quiz.difficulty} color={quiz.color} />
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
+                          {quiz.questions}
+                        </td>
+                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-right">
+                          <button
+                            className="text-primary hover:text-primary/80 transition-colors font-semibold"
+                            onClick={() => quizFetch(quiz.id)}
+                          >
+                            {isExpanded ? 'Hide Details' : 'View Details'}
+                          </button>
+                        </td>
+                        
+                      </tr>
+                      {isExpanded && (
+                        <tr className="bg-gray-900/40 dark:bg-gray-900/40">
+                          <td colSpan={5} className="px-6 py-4">
+                            {details ? (
+                              <div className="space-y-3">
+                                <p className="text-sm text-gray-600 dark:text-gray-300">
+                                  {` Questions (${details.questions.length}):`}
+                                </p>
+                                <ul className="grid gap-3 md:grid-cols-2">
+                                  {details.questions.map(question => (
+                                    <li
+                                      key={question.id}
+                                      className="rounded-lg border border-gray-200 dark:border-gray-800 bg-gray-800 dark:bg-background-dark p-3 flex flex-col gap-4"
+                                    >
+                                      <p className="text-lg font-large text-gray-900 dark:text-white">{question.question}</p>
+                                      <p className="mt-1 text-sm text-gray-400 dark:text-gray-400">
+                                        Answer:{' '}
+                                        <span className="font-semibold text-green-400">{question.answer}</span>
+                                      </p>
+                                      <p>
+                                        Explaination : <span className="text-sm text-gray-500 dark:text-gray-400">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span>
+                                      </p>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            ) : (
+                              <p className="text-sm text-gray-500 dark:text-gray-400">Details will be available soon.</p>
+                            )}
+                          </td>
+                        </tr>
+                      )}
+                    </React.Fragment>
+                    );
+                })}
               </tbody>
             </table>
-          </div>
+            
 
           {/* Pagination */}
           <div className="flex items-center justify-between border-t border-gray-200 dark:border-gray-800 dark:bg-background-dark px-4 py-3 sm:px-6">
@@ -152,12 +209,17 @@ const MainContent = ({ activeTopic }) => {
                 </nav>
               </div>
             </div>
-          </div>
+          </div> 
         </div>
       </div>
+
+    </div>
     </main>
   );
 };
+
+
+
 
 
 export default MainContent

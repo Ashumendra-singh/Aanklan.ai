@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar.jsx';
+import QuizForm from './QuizForm.jsx';
+import Sidebar from './HisrotyItem.jsx';
 import TopicsSidebar from './Topicsidebar.jsx';
 import MainContent from './MainContect.jsx';
 
@@ -18,12 +19,12 @@ const quizTopics = [
 
 
 export default function QuizPage() {
-  const [activeNav, setActiveNav] = useState('history');
+  const [activeNav, setActiveNav] = useState('New Quiz');
   const [activeTopic, setActiveTopic] = useState('quantum');
 
   return (
-    <div className="bg-background-light dark:bg-background-dark font-sans text-gray-900 dark:text-gray-100">
-      <style>{`
+    <div className="bg-background-light dark:bg-background-dark  font-sans text-gray-900 dark:text-gray-100">
+      {/* <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
         
@@ -35,11 +36,13 @@ export default function QuizPage() {
           font-family: 'Inter', sans-serif;
         }
       `}</style>
-      
-      <div className="relative flex min-h-screen w-full">
-        <Sidebar activeNav={activeNav} onNavClick={setActiveNav}  />
+       */}
+      <div className="flex flex-col md:flex-row h-full gap-8 p-8 max-w-[1440px] jmx-auto">
+        <QuizForm />
+        <Sidebar />
+        {/* <Sidebar activeNav={activeNav} onNavClick={setActiveNav}  />
         <TopicsSidebar activeNav={activeNav} activeTopic={activeTopic} onTopicClick={setActiveTopic} quizTopics={quizTopics} />
-        <MainContent activeTopic={activeTopic} />
+        <MainContent activeTopic={activeTopic} activeNav={activeNav} /> */}
       </div>
     </div>
   );
