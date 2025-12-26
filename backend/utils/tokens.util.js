@@ -15,7 +15,7 @@ export function generateAndSetJWT(res, user) {
         expiresIn: "7d",
     });
 
-    res.cookie("Aanklan.ai-token", token, {
+    const sdf = res.cookie("Aanklan.ai-token", token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === "production",
         sameSite: "strict",

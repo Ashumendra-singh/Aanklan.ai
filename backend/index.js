@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import userRouter from "./router/user.router.js";
 import dbconnect from "./utils/dbconnect.js";
+import quizRouter from "./router/quiz.router.js";
 
 dotenv.config();
 
@@ -19,6 +20,7 @@ app.use(cookieParser());
 
 
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/quiz", quizRouter);
 
 
 const PORT = process.env.PORT || 8080;

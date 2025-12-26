@@ -1,15 +1,30 @@
 import { useState } from 'react';
+const backend = import.meta.env.VITE_backend+'/api/v1/quiz/generate';
 
 
 
 const QuizForm = () => {
   const [topic, setTopic] = useState('');
-  const [difficulty, setDifficulty] = useState('Medium');
-  const [language, setLanguage] = useState('English (US)');
+  const [difficulty, setDifficulty] = useState('Intermediate');
+  const [language, setLanguage] = useState('English');
 
   const handleSubmit = () => {
-    console.log('Generating quiz:', { topic, difficulty, language });
-    alert(`Generating ${difficulty} quiz on "${topic}" in ${language}`);
+    const response = fetch(backend, {
+      method: 'POST',
+      headers: {  
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
+      body: JSON.stringify({ topic, level:difficulty, language }),
+    });
+    response.then(res => res.json()).then(data => {
+      
+      if(data.success)
+        console.log("Quiz generated", data.quiz);
+    }).catch(error => {
+      console.error('Login error:', error);
+    });
+    // alert(`Generating ${difficulty} quiz on "${topic}" in ${language}`);
   };
 
   return (
@@ -57,7 +72,7 @@ const QuizForm = () => {
               Difficulty Level
             </label>
             <div className="flex h-14 w-full items-center rounded-lg bg-slate-100 dark:bg-slate-900/50 p-1.5 border border-slate-200 dark:border-slate-700">
-              {['Easy', 'Medium', 'Hard'].map((level) => (
+              {['Beginner', 'Intermediate', 'Advanced'].map((level) => (
                 <label key={level} className="cursor-pointer relative flex-1 h-full">
                   <input
                     type="radio"

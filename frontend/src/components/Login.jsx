@@ -26,10 +26,11 @@ const Login = ({ onSwitchToSignup }) => {
       headers: {  
         'Content-Type': 'application/json',
       },
+      credentials: 'include',
       body: JSON.stringify({ email, password }),
     });
     response.then(res => res.json()).then(data => {
-      
+      console.log(data);
       if(data.success)
       navigate('/quiz');
     }).catch(error => {
