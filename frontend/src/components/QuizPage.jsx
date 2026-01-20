@@ -39,7 +39,7 @@ export default function QuizPage() {
        */}
       <div className="flex flex-col md:flex-row h-full gap-8 p-8 max-w-[1440px] jmx-auto">
         <QuizForm />
-        <Sidebar />
+        {/* <Sidebar /> */}
         {/* <Sidebar activeNav={activeNav} onNavClick={setActiveNav}  />
         <TopicsSidebar activeNav={activeNav} activeTopic={activeTopic} onTopicClick={setActiveTopic} quizTopics={quizTopics} />
         <MainContent activeTopic={activeTopic} activeNav={activeNav} /> */}
